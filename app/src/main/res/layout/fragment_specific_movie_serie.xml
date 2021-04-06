@@ -1,135 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-        <ImageView
-            android:id="@+id/photoSpecific"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:src="@drawable/cartelera" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/photoSpecific"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:src="@drawable/film1" />
+
+            <TextView
+                android:id="@+id/titleSpecific"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="41dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/photoSpecific"
+                android:text="SENTINELLE"
+                android:textColor="@color/textColor"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/titleSpecific"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="87dp"
+                android:layout_marginTop="14dp"
+                android:layout_toRightOf="@id/photoSpecific"
+                android:indeterminateOnly="false"
+                android:progress="10"
+                android:progressDrawable="@drawable/circle" />
+
+            <TextView
+                android:id="@+id/progress_bar_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleSpecific"
+                android:layout_marginLeft="101dp"
+                android:layout_marginTop="31dp"
+                android:layout_toRightOf="@id/photoSpecific"
+                android:text="10%"
+                android:textColor="@color/textColor"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewUserScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleSpecific"
+                android:layout_marginLeft="77dp"
+                android:layout_marginTop="72dp"
+                android:layout_toRightOf="@id/photoSpecific"
+                android:text="USER SCORE"
+                android:textColor="@color/textColor"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTrailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewUserScore"
+                android:layout_marginLeft="53dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/photoSpecific"
+                android:drawableLeft="@drawable/player"
+                android:drawableTint="@color/textColor"
+                android:gravity="center"
+                android:text="TRAILER HERE"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/titleSpecific"
+            android:id="@+id/textViewDescriptionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/photoSpecific"
-            android:text="SENTINELLE"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:text="DESCRIPTION"
             android:textColor="@color/textColor"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/titleSpecific"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="87dp"
-            android:layout_marginTop="14dp"
-            android:layout_toRightOf="@id/photoSpecific"
-            android:indeterminateOnly="false"
-            android:progress="10"
-            android:progressDrawable="@drawable/circle" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
         <TextView
-            android:id="@+id/progress_bar_num"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewDescription"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleSpecific"
-            android:layout_marginLeft="101dp"
-            android:layout_marginTop="31dp"
-            android:layout_toRightOf="@id/photoSpecific"
-            android:text="10%"
+            android:layout_margin="16dp"
+            android:text="After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Months later he awakens with the power of super speed, granting him the ability to move through Central City like an unseen guardian angel. Though initially excited by his newfound powers, Barry is shocked to discover he is not the only who was created in the wake of the accelerator explosion -- and not everyone is using their new powers for good. Barry partners with S.T.A.R. Labs and dedicates his life to protect the innocent. For now, only a few close friends and associates know that Barry is literally the fastest man alive, but it won't be long before the world learns what Barry Allen has become...The Flash."
             android:textColor="@color/textColor"
-            android:textSize="12dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionTitle" />
 
         <TextView
-            android:id="@+id/textViewUserScore"
+            android:id="@+id/textViewActorsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleSpecific"
-            android:layout_marginLeft="77dp"
-            android:layout_marginTop="72dp"
-            android:layout_toRightOf="@id/photoSpecific"
-            android:text="USER SCORE"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:text="ACTORS"
             android:textColor="@color/textColor"
-            android:textSize="12dp" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
-        <TextView
-            android:id="@+id/textViewTrailer"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewActors"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewUserScore"
-            android:layout_marginLeft="53dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/photoSpecific"
-            android:drawableLeft="@drawable/player"
-            android:drawableTint="@color/textColor"
-            android:gravity="center"
-            android:text="TRAILER HERE"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/textViewDescriptionTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="16dp"
-        android:text="DESCRIPTION"
-        android:textColor="@color/textColor"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
-
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Months later he awakens with the power of super speed, granting him the ability to move through Central City like an unseen guardian angel. Though initially excited by his newfound powers, Barry is shocked to discover he is not the only who was created in the wake of the accelerator explosion -- and not everyone is using their new powers for good. Barry partners with S.T.A.R. Labs and dedicates his life to protect the innocent. For now, only a few close friends and associates know that Barry is literally the fastest man alive, but it won't be long before the world learns what Barry Allen has become...The Flash."
-        android:textColor="@color/textColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionTitle" />
-
-    <TextView
-        android:id="@+id/textViewActorsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="16dp"
-        android:text="ACTORS"
-        android:textColor="@color/textColor"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewActors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewActorsTitle" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -17,6 +17,8 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WellcomeFragment.fragment = this;
+        WellcomeFragment.currentFragment = AppFragmentPossibilities.SearchFragment;
     }
 
 
@@ -31,7 +33,6 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        WellcomeFragment.fragment = this;
-        WellcomeFragment.currentFragment = AppFragmentPossibilities.SearchFragment;
+
     }
 }

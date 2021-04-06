@@ -6,4 +6,12 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="username">Username</string>
+    <string name="login">LOGIN</string>
+    <string name="email_usrname">Email/Usrname</string>
+    <string name="register">REGISTER</string>
+    <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
+    <string name="login_with_g">LOGIN WITH G+</string>
+
+
+    <string name="lore_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque ut lacus a ultrices. Ut ultricies, eros a eleifend placerat, tellus sapien tincidunt risus, non ultricies orci risus a purus. Vestibulum eu neque fringilla, molestie neque nec, interdum massa. Etiam et lacinia augue, in egestas mi. Nunc congue, elit in pretium consectetur, ligula elit venenatis tortor, et volutpat est elit non sem. Fusce ullamcorper sagittis sollicitudin. Nunc semper euismod tellus sit amet egestas. Quisque maximus tincidunt diam vitae consectetur. Ut elementum arcu odio, non pharetra ante hendrerit a. Quisque elementum magna felis, sed ultricies lacus posuere eget. Proin rhoncus sodales tellus, et pulvinar lorem laoreet sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam tincidunt mattis purus non cursus.</string>
 </resources>

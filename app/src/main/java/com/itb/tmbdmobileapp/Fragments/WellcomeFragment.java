@@ -28,6 +28,7 @@ public class WellcomeFragment extends Fragment {
 
     public static AppFragmentPossibilities currentFragment;
     public static Fragment fragment;
+    private RecomendationsFragment recomendationsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,20 +59,24 @@ public class WellcomeFragment extends Fragment {
                 NavDirections navDirections = FragmentChanger.anyFragmentToRecomendations(currentFragment);
                 Navigation.findNavController(fragment.getView()).navigate(navDirections);
             }
+            if (currentFragment == AppFragmentPossibilities.RecomendationsFragment) {
+                recomendationsFragment = (RecomendationsFragment) fragment;
 
-            switch (item.getItemId()){
-                case R.id.item_peliculas:
-
-                    break;
-                case R.id.item_series:
-
-                    break;
-                case R.id.item_actores:
-
-                    break;
-                case R.id.item_favoritos:
-
-                    break;
+                switch (item.getItemId()){
+                    case R.id.item_peliculas:
+                        recomendationsFragment.currentState = RecomendationsFragment.State.films;
+                        break;
+                    case R.id.item_series:
+                        recomendationsFragment.currentState = RecomendationsFragment.State.series;
+                        break;
+                    case R.id.item_actores:
+                        recomendationsFragment.currentState = RecomendationsFragment.State.actors;
+                        break;
+                    case R.id.item_favoritos:
+                        recomendationsFragment.currentState = RecomendationsFragment.State.favourites;
+                        break;
+                }
+                recomendationsFragment.changeRecyclerViews();
             }
             return false;
         });

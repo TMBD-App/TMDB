@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_graph"
     app:startDestination="@id/recomendationsFragment">
     <fragment
@@ -13,10 +12,20 @@
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/recomendations_to_filmAndSeriesDetails"
-            app:destination="@id/filmAndSeriesDetailsFragment" />
+            app:destination="@id/filmAndSeriesDetailsFragment" >
+            <argument
+                android:name="film"
+                app:argType="com.itb.tmbdmobileapp.Modelos.MovieTest"
+                />
+        </action>
         <action
             android:id="@+id/recomendations_to_actorDetails"
-            app:destination="@id/actorDetailsFragment" />
+            app:destination="@id/actorDetailsFragment" >
+            <argument
+                android:name="actor"
+                app:argType="com.itb.tmbdmobileapp.Modelos.ActorTest"
+                />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -27,10 +36,20 @@
             app:destination="@id/recomendationsFragment" />
         <action
             android:id="@+id/search_to_filmAndSeriesDetails"
-            app:destination="@id/filmAndSeriesDetailsFragment" />
+            app:destination="@id/filmAndSeriesDetailsFragment" >
+            <argument
+                android:name="film"
+                app:argType="com.itb.tmbdmobileapp.Modelos.MovieTest"
+                />
+        </action>
         <action
             android:id="@+id/search_to_actorDetails"
-            app:destination="@id/actorDetailsFragment" />
+            app:destination="@id/actorDetailsFragment" >
+            <argument
+                android:name="actor"
+                app:argType="com.itb.tmbdmobileapp.Modelos.ActorTest"
+                />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/filmAndSeriesDetailsFragment"
@@ -39,7 +58,12 @@
         app:startDestination="@id/filmAndSeriesDetails_to_recomendations">
         <action
             android:id="@+id/filmAndSeriesDetails_to_actorDetails"
-            app:destination="@id/actorDetailsFragment" />
+            app:destination="@id/actorDetailsFragment" >
+            <argument
+                android:name="actor"
+                app:argType="com.itb.tmbdmobileapp.Modelos.ActorTest"
+                />
+        </action>
         <action
             android:id="@+id/filmAndSeriesDetails_to_recomendations"
             app:destination="@id/recomendationsFragment" />
@@ -53,7 +77,12 @@
         android:label="ActorDetailsFragment" >
         <action
             android:id="@+id/actorDetails_to_filmAndSeriesDetails"
-            app:destination="@id/filmAndSeriesDetailsFragment" />
+            app:destination="@id/filmAndSeriesDetailsFragment" >
+            <argument
+                android:name="film"
+                app:argType="com.itb.tmbdmobileapp.Modelos.MovieTest"
+                />
+        </action>
         <action
             android:id="@+id/actorDetails_to_recomendations"
             app:destination="@id/recomendationsFragment" />
