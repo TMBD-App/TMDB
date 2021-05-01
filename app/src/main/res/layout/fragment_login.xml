@@ -12,15 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:src="@drawable/logosinfondo"
-        android:layout_marginTop="25dp"
-        tools:ignore="ContentDescription" />
+        android:layout_marginTop="25dp"/>
 
     <TextView
         android:id="@+id/register_textView_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:textColor="@color/textColor"
         android:textStyle="bold"
 
@@ -29,7 +28,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_textInputLayout_username"
+        android:id="@+id/login_textInputLayout_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="32dp"
@@ -41,12 +40,12 @@
         app:startIconDrawable = "@drawable/username"
         app:startIconTint="@color/detailsColor"
         android:layout_below="@+id/register_textView_login"
-        android:hint="@string/email_usrname"
+        android:hint="@string/email"
         android:textColorHint="@color/textColor"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_textInputEditText"
+            android:id="@+id/login_textInputEditText_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_below="@id/login_textInputLayout_username"
+        android:layout_below="@id/login_textInputLayout_email"
         app:endIconMode="password_toggle"
         app:startIconDrawable = "@drawable/password"
         app:startIconTint="@color/detailsColor"
@@ -86,7 +85,7 @@
             android:background="@drawable/border"
             android:hint="@string/password"
             />
-<!--        android:background="@drawable/border"-->
+        <!--        android:background="@drawable/border"-->
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +98,7 @@
         android:text="@string/remember_me"
         android:buttonTint="@color/detailsColor"
         android:textColor="@color/textColor"
-        tools:ignore="RtlHardcoded,UnusedAttribute" />
+        />
 
 
     <Button
@@ -144,8 +143,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/facebook"
         android:textColor="@color/textColor"
-        app:icon = "@drawable/facebook"
-        tools:ignore="UnusedAttribute" />
+        app:icon = "@drawable/facebook"/>
 
     <Button
         android:id="@+id/register_button_google"
@@ -158,8 +156,7 @@
         android:layout_marginRight="32dp"
         android:backgroundTint="@color/gmail"
         android:textColor="@color/textColor"
-        app:icon = "@drawable/gmail"
-        tools:ignore="UnusedAttribute" />
+        app:icon = "@drawable/gmail"/>
 
 
 </RelativeLayout>

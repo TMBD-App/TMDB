@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "968458895972",
+    "firebase_url": "https://tmbd-efccc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tmbd-efccc",
+    "storage_bucket": "tmbd-efccc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968458895972:android:e3ecccea82802f0d24d571",
+        "android_client_info": {
+          "package_name": "com.itb.tmbdmobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968458895972-6hk8ebj840m3svuce7ke5nsfpu3urv7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWUs1Uo2jKwxk3xRitOxxeJqcWBVq7EN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968458895972-6hk8ebj840m3svuce7ke5nsfpu3urv7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

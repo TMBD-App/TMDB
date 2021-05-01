@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -14,6 +16,8 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.itb.tmbdmobileapp.Database.DatabaseHelper;
 import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
 import com.itb.tmbdmobileapp.R;
 import com.itb.tmbdmobileapp.SupportFragmentManagement.FragmentChanger;
@@ -26,6 +30,7 @@ public class WellcomeFragment extends Fragment {
     public static AppFragmentPossibilities currentFragment;
     public static Fragment fragment;
     private RecomendationsFragment recomendationsFragment;
+    public static TextView textViewHeaderUsername, textViewHeaderEmail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,12 @@ public class WellcomeFragment extends Fragment {
         MaterialToolbar toolbar = view.findViewById(R.id.topAppBar);
 
         toolbar.setOnClickListener(v -> changeDrawerVisibility());
+
+        View headerView = navigationView.getHeaderView(0);
+        textViewHeaderUsername = headerView.findViewById(R.id.textViewHeaderUsername);
+        textViewHeaderEmail = headerView.findViewById(R.id.textViewHeaderEmail);
+
+        DatabaseHelper.search(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         navigationView.setNavigationItemSelectedListener(item -> {
             if (currentFragment != AppFragmentPossibilities.RecomendationsFragment) {

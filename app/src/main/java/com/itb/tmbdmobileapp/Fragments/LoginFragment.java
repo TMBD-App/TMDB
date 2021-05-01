@@ -5,21 +5,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.itb.tmbdmobileapp.Database.DatabaseHelper;
+import com.itb.tmbdmobileapp.Modelos.User;
 import com.itb.tmbdmobileapp.R;
-
-import java.util.Objects;
 
 public class LoginFragment extends Fragment implements View.OnClickListener  {
     private TextInputLayout layoutPassword, layoutUsername;
-    private TextInputEditText editTextPassword, editTextUsername;
+    private TextInputEditText editTextPassword, editTextEmail;
+    private FirebaseAuth firebaseAuth;
+    private boolean loginSuccess = false;
+    User u;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,9 +49,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
         MaterialButton login = view.findViewById(R.id.register_button_login);
         MaterialButton register = view.findViewById(R.id.register_button_register);
         layoutPassword = view.findViewById(R.id.login_textInputLayout_password);
-        layoutUsername = view.findViewById(R.id.login_textInputLayout_username);
+        layoutUsername = view.findViewById(R.id.login_textInputLayout_email);
         editTextPassword = view.findViewById(R.id.login_textInputEditText_password);
-        editTextUsername = view.findViewById(R.id.search_textInputEditText);
+        editTextEmail = view.findViewById(R.id.login_textInputEditText_email);
+
+        firebaseAuth= FirebaseAuth.getInstance();
+
 
         register.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -49,7 +63,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        resetearInputLayout();
+        ResetearInputLayout();
         boolean flag = true;
         NavDirections navDirections = null;
         switch (v.getId()) {
@@ -61,26 +75,55 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
                 navDirections = LoginFragmentDirections.loginToRegister();
                 break;
         }
-        if (flag) Navigation.findNavController(v).navigate(Objects.requireNonNull(navDirections));
+        if (flag) Navigation.findNavController(v).navigate(navDirections);
     }
+
 
     public boolean canGoToWellcome() {
-        boolean passwordCheck = !Objects.requireNonNull(editTextPassword.getText()).toString().equals("");
-        boolean usernameCheck = !Objects.requireNonNull(editTextUsername.getText()).toString().equals("");
+        signInUser();
+        boolean passwordCheck = !editTextPassword.getText().toString().equals("");
+        boolean usernameCheck = !editTextEmail.getText().toString().equals("");
 
-        if (!passwordCheck) inputLayoutError(layoutPassword, "Introduce la Contraseña");
-        if (!usernameCheck) inputLayoutError(layoutUsername, "Introduce el Usuario");
+        if (!passwordCheck) InputLayoutError(layoutPassword, "Introduce la Contraseña");
+        if (!usernameCheck) InputLayoutError(layoutUsername, "Introduce el Usuario");
 
-        return passwordCheck && usernameCheck;
+        return passwordCheck && usernameCheck && loginSuccess;
     }
 
-    private void inputLayoutError(TextInputLayout layout, String mensajeError) {
+    private void InputLayoutError(TextInputLayout layout, String mensajeError) {
         layout.setEnabled(true);
         layout.setError(mensajeError);
     }
 
-    private void resetearInputLayout() {
+    private void ResetearInputLayout() {
         layoutUsername.setError("");
         layoutPassword.setError("");
+    }
+
+
+    private void signInUser(){
+        try{
+            if(!editTextEmail.getText().toString().isEmpty() && !editTextPassword.getText().toString().isEmpty()){
+                if (firebaseAuth != null){
+                    firebaseAuth.signInWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            loginSuccess = true;
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            loginSuccess = false;
+                        }
+                    });
+                }
+            }else{
+                Toast.makeText(getContext(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
