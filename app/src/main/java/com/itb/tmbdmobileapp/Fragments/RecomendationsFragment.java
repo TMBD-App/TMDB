@@ -68,6 +68,7 @@ public class RecomendationsFragment extends Fragment {
             case recomendations:
                 MainActivity.apiClient.allTypes(requireView());
             case favourites:
+                //MainActivity.apiClient.setFavorites(requireView(), listaMovies, listaSeries, listaPeople);
                 break;
             case films:
                 MainActivity.apiClient.onlyFilms(requireView());

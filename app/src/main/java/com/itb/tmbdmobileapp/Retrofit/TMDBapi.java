@@ -9,6 +9,7 @@ import com.itb.tmbdmobileapp.Modelos.MovieCredits;
 import com.itb.tmbdmobileapp.Modelos.MoviesResponse;
 import com.itb.tmbdmobileapp.Modelos.People;
 import com.itb.tmbdmobileapp.Modelos.PeopleResponse;
+import com.itb.tmbdmobileapp.Modelos.TV;
 import com.itb.tmbdmobileapp.Modelos.TvCredits;
 import com.itb.tmbdmobileapp.Modelos.TvResponse;
 
@@ -38,4 +39,14 @@ public interface TMDBapi {
 
     @GET()
     Call<TvCredits> getTvCredits(@Url String url);
+
+    @GET()
+    Call<Movie> getMovieById(@Url String url);
+
+    @GET()
+    Call<People> getPeopleById(@Url String url);
+
+    @GET()
+    Call<TV> getTVById(@Url String url);
+
 }

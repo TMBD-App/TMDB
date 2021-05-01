@@ -25,6 +25,8 @@ import com.itb.tmbdmobileapp.Support.Common;
 import com.itb.tmbdmobileapp.SupportFragmentManagement.FragmentChanger;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +40,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
+    public static List<Movie> auxMovie = new ArrayList<>();
+    public static List<TV> auxTV = new ArrayList<>();
+    public static List<People> auxPeople = new ArrayList<>();
 
     private TMDBapi client;
 
@@ -190,7 +195,6 @@ public class ApiClient {
                 List<Genre> gnr = Objects.requireNonNull(response.body()).getGenres();
                 StringBuilder aux = new StringBuilder();
                 boolean flag;
-                int a = gnr.get(0).getId();
                 for (int i = 0; i < gnr.size(); i++) {
                     flag = true;
                     for (int j = 0; j < genres.size() && flag; j++) {
@@ -205,6 +209,63 @@ public class ApiClient {
 
             @Override
             public void onFailure(Call<GenreResponse> call, Throwable t) {}
+        });
+    }
+
+    private void executeOnlyOneMovie(String url, boolean flag, View v) {
+        Call<Movie> call = client.getMovieById(url);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                auxMovie.add(response.body());
+                if (flag) {
+                    MovieAdapter adapter = new MovieAdapter(auxMovie, R.layout.item_view_grid, movie -> FragmentChanger.recomendatiosToFilmsDetail(movie, v));
+                    RecomendationsFragment.recyclerView1.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void executeOnlyOneTv(String url, boolean flag, View v) {
+        Call<TV> call = client.getTVById(url);
+        call.enqueue(new Callback<TV>() {
+            @Override
+            public void onResponse(Call<TV> call, Response<TV> response) {
+                auxTV.add(response.body());
+                if (flag) {
+                    TvAdapter adapter = new TvAdapter(auxTV, R.layout.item_view_grid, tv -> FragmentChanger.recomendationsToTvDetails(tv, v));
+                    RecomendationsFragment.recyclerView2.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TV> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void executeOnlyOnePeople(String url, boolean flag, View v) {
+        Call<People> call = client.getPeopleById(url);
+        call.enqueue(new Callback<People>() {
+            @Override
+            public void onResponse(Call<People> call, Response<People> response) {
+                auxPeople.add(response.body());
+                if (flag) {
+                    ActorAdapter adapter = new ActorAdapter(auxPeople, R.layout.item_view_grid_people, people -> FragmentChanger.recomendationsToActorDetail(people, v));
+                    RecomendationsFragment.recyclerView3.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<People> call, Throwable t) {
+
+            }
         });
     }
 
@@ -286,4 +347,18 @@ public class ApiClient {
     public void setActorSeries(View v, int peopleId) { executeTvCredits(Common.getUrlTvCredits(peopleId), v); }
 
     public void setSearch(View v, String search) { executeMovies(Common.getUrlSearch(search), 3, v);}
+
+    public void setFavorites(View v, List<Integer> moviIds, List<Integer> serieIds, List<Integer> peopleIds) {
+        for (int i = 0; i < moviIds.size(); i++) {
+            executeOnlyOneMovie(Common.getUrlFilmById(moviIds.get(i)), i != moviIds.size() -1, v);
+        }
+
+        for (int i = 0; i < serieIds.size(); i++) {
+            executeOnlyOneTv(Common.getUrlTvById(serieIds.get(i)), i != serieIds.size() -1, v);
+        }
+
+        for (int i = 0; i < peopleIds.size(); i++) {
+            executeOnlyOnePeople(Common.getUrlPeopleById(peopleIds.get(i)), i != peopleIds.size() -1, v);
+        }
+    }
 }
