@@ -11,11 +11,19 @@
             android:id="@+id/recomendations_to_search"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/recomendations_to_filmAndSeriesDetails"
+            android:id="@+id/recomendations_to_filmAndSeriesDetails_film"
             app:destination="@id/filmAndSeriesDetailsFragment" >
             <argument
                 android:name="film"
-                app:argType="com.itb.tmbdmobileapp.Modelos.MovieTest"
+                app:argType="com.itb.tmbdmobileapp.Modelos.Movie"
+                />
+        </action>
+        <action
+            android:id="@+id/recomendations_to_filmAndSeriesDetails_serie"
+            app:destination="@id/filmAndSeriesDetailsFragment" >
+            <argument
+                android:name="serie"
+                app:argType="com.itb.tmbdmobileapp.Modelos.TV"
                 />
         </action>
         <action
@@ -23,7 +31,7 @@
             app:destination="@id/actorDetailsFragment" >
             <argument
                 android:name="actor"
-                app:argType="com.itb.tmbdmobileapp.Modelos.ActorTest"
+                app:argType="com.itb.tmbdmobileapp.Modelos.People"
                 />
         </action>
     </fragment>
@@ -35,11 +43,19 @@
             android:id="@+id/search_to_recomendations"
             app:destination="@id/recomendationsFragment" />
         <action
-            android:id="@+id/search_to_filmAndSeriesDetails"
+            android:id="@+id/search_to_filmAndSeriesDetails_film"
             app:destination="@id/filmAndSeriesDetailsFragment" >
             <argument
                 android:name="film"
-                app:argType="com.itb.tmbdmobileapp.Modelos.MovieTest"
+                app:argType="com.itb.tmbdmobileapp.Modelos.Movie"
+                />
+        </action>
+        <action
+            android:id="@+id/search_to_filmAndSeriesDetails_serie"
+            app:destination="@id/filmAndSeriesDetailsFragment" >
+            <argument
+                android:name="serie"
+                app:argType="com.itb.tmbdmobileapp.Modelos.TV"
                 />
         </action>
         <action
@@ -47,7 +63,7 @@
             app:destination="@id/actorDetailsFragment" >
             <argument
                 android:name="actor"
-                app:argType="com.itb.tmbdmobileapp.Modelos.ActorTest"
+                app:argType="com.itb.tmbdmobileapp.Modelos.People"
                 />
         </action>
     </fragment>
@@ -61,7 +77,7 @@
             app:destination="@id/actorDetailsFragment" >
             <argument
                 android:name="actor"
-                app:argType="com.itb.tmbdmobileapp.Modelos.ActorTest"
+                app:argType="com.itb.tmbdmobileapp.Modelos.People"
                 />
         </action>
         <action
@@ -76,11 +92,19 @@
         android:name="com.itb.tmbdmobileapp.Fragments.ActorDetailsFragment"
         android:label="ActorDetailsFragment" >
         <action
-            android:id="@+id/actorDetails_to_filmAndSeriesDetails"
+            android:id="@+id/actorDetails_to_filmAndSeriesDetails_film"
             app:destination="@id/filmAndSeriesDetailsFragment" >
             <argument
                 android:name="film"
-                app:argType="com.itb.tmbdmobileapp.Modelos.MovieTest"
+                app:argType="com.itb.tmbdmobileapp.Modelos.Movie"
+                />
+        </action>
+        <action
+            android:id="@+id/actorDetails_to_filmAndSeriesDetails_serie"
+            app:destination="@id/filmAndSeriesDetailsFragment" >
+            <argument
+                android:name="serie"
+                app:argType="com.itb.tmbdmobileapp.Modelos.TV"
                 />
         </action>
         <action

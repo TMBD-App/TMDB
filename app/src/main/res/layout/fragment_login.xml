@@ -28,7 +28,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_textInputLayout_username"
+        android:id="@+id/login_textInputLayout_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="32dp"
@@ -40,12 +40,12 @@
         app:startIconDrawable = "@drawable/username"
         app:startIconTint="@color/detailsColor"
         android:layout_below="@+id/register_textView_login"
-        android:hint="@string/email_usrname"
+        android:hint="@string/email"
         android:textColorHint="@color/textColor"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_textInputEditText_username"
+            android:id="@+id/login_textInputEditText_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_below="@id/login_textInputLayout_username"
+        android:layout_below="@id/login_textInputLayout_email"
         app:endIconMode="password_toggle"
         app:startIconDrawable = "@drawable/password"
         app:startIconTint="@color/detailsColor"
@@ -85,7 +85,7 @@
             android:background="@drawable/border"
             android:hint="@string/password"
             />
-<!--        android:background="@drawable/border"-->
+        <!--        android:background="@drawable/border"-->
 
     </com.google.android.material.textfield.TextInputLayout>
 

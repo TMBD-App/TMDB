@@ -13,17 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.itb.tmbdmobileapp.Adapters.MovieTestAdapter;
-import com.itb.tmbdmobileapp.Modelos.ActorTest;
-import com.itb.tmbdmobileapp.Modelos.ModelGenerator;
+
+import com.itb.tmbdmobileapp.Activities.MainActivity;
+import com.itb.tmbdmobileapp.Modelos.People;
 import com.itb.tmbdmobileapp.R;
-import com.itb.tmbdmobileapp.SupportFragmentManagement.AppFragmentPossibilities;
+import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
+import com.itb.tmbdmobileapp.Support.Common;
+import com.squareup.picasso.Picasso;
 
 public class ActorDetailsFragment extends Fragment {
+    private ImageView image;
+    private TextView name, departemnt;
+    public static RecyclerView recyclerViewFilms, recyclerViewSeries;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class ActorDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_specific_movie_serie, container, false);
+        return inflater.inflate(R.layout.fragment_specific_people, container, false);
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
@@ -44,30 +47,22 @@ public class ActorDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ActorTest actorTest = (ActorTest) requireArguments().get("actor");
+        People people = (People) requireArguments().get("actor");
 
-        ImageView imageView = view.findViewById(R.id.photoSpecific);
-        TextView title = view.findViewById(R.id.titleSpecific);
-        TextView puntuationText = view.findViewById(R.id.progress_bar_num);
-        TextView description = view.findViewById(R.id.textViewDescription);
-        TextView playMessage = view.findViewById(R.id.textViewTrailer);
-        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewActors);
+        image = view.findViewById(R.id.photoSpecific);
+        name = view.findViewById(R.id.titleSpecific);
+        departemnt = view.findViewById(R.id.textViewDepartment);
+        recyclerViewFilms = view.findViewById(R.id.recyclerViewFilms);
+        recyclerViewSeries = view.findViewById(R.id.recyclerViewSeries);
 
+        Picasso.get().load(Common.MOVIEDB_SMALL_POSTER_URL + people.getProfile_path()).into(image);
+        name.setText(people.getName());
+        departemnt.setText(people.getKnown_for_department());
 
-        MovieTestAdapter adapter = new MovieTestAdapter(ModelGenerator.films(), actors -> {
-            NavDirections navDirections = ActorDetailsFragmentDirections.actorDetailsToFilmAndSeriesDetails(actors);
-            Navigation.findNavController(getView()).navigate(navDirections);
-        });
+        recyclerViewFilms.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewSeries.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
-
-        imageView.setImageResource(actorTest.getPhoto());
-        title.setText(actorTest.getName());
-        puntuationText.setText(actorTest.getPuntuation()+"");
-        description.setText(actorTest.getDescription());
-        progressBar.setProgress(actorTest.getPuntuation());
-        playMessage.setVisibility(View.INVISIBLE);
+        MainActivity.apiClient.setActorFilms(requireView(), people.getId());
+        MainActivity.apiClient.setActorSeries(requireView(), people.getId());
     }
 }

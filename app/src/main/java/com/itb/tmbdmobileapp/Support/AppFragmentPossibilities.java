@@ -1,4 +1,4 @@
-package com.itb.tmbdmobileapp.SupportFragmentManagement;
+package com.itb.tmbdmobileapp.Support;
 
 public enum AppFragmentPossibilities {
     RecomendationsFragment,

@@ -13,17 +13,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.itb.tmbdmobileapp.Adapters.ActorTestAdapter;
-import com.itb.tmbdmobileapp.Modelos.ModelGenerator;
-import com.itb.tmbdmobileapp.Modelos.MovieTest;
+import com.itb.tmbdmobileapp.Activities.MainActivity;
+import com.itb.tmbdmobileapp.Modelos.Movie;
+import com.itb.tmbdmobileapp.Modelos.TV;
 import com.itb.tmbdmobileapp.R;
-import com.itb.tmbdmobileapp.SupportFragmentManagement.AppFragmentPossibilities;
+import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
+import com.itb.tmbdmobileapp.Support.Common;
+import com.squareup.picasso.Picasso;
 
 public class FilmAndSeriesDetailsFragment extends Fragment {
+    public static RecyclerView recyclerView;
+    public static TextView genres;
+    private enum State {film, serie}
+    private State currentState;
+    private Movie movie;
+    private TV serie;
+    private ImageView imageView;
+    private TextView title, puntuationText, description;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,29 +51,52 @@ public class FilmAndSeriesDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (requireArguments().get("film") != null) {
+            movie = (Movie) requireArguments().get("film");
+            currentState = State.film;
+        }
 
-        MovieTest movieTest = (MovieTest) requireArguments().get("film");
+        if (requireArguments().get("serie") != null) {
+            serie = (TV) requireArguments().get("serie");
+            currentState = State.serie;
+        }
 
-        ImageView imageView = view.findViewById(R.id.photoSpecific);
-        TextView title = view.findViewById(R.id.titleSpecific);
-        TextView puntuationText = view.findViewById(R.id.progress_bar_num);
-        TextView description = view.findViewById(R.id.textViewDescription);
-        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewActors);
-
-
-        ActorTestAdapter adapter = new ActorTestAdapter(ModelGenerator.actors(), actors -> {
-            NavDirections navDirections = FilmAndSeriesDetailsFragmentDirections.filmAndSeriesDetailsToActorDetails(actors);
-            Navigation.findNavController(getView()).navigate(navDirections);
-        });
-
+        imageView = view.findViewById(R.id.photoSpecific);
+        title = view.findViewById(R.id.titleSpecific);
+        puntuationText = view.findViewById(R.id.progress_bar_num);
+        description = view.findViewById(R.id.textViewDescription);
+        progressBar = view.findViewById(R.id.progress_bar);
+        recyclerView = view.findViewById(R.id.recyclerViewFilms);
+        genres = view.findViewById(R.id.textViewGenres);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
 
-        imageView.setImageResource(movieTest.getPhoto());
-        title.setText(movieTest.getTitle());
-        puntuationText.setText(movieTest.getPuntuation()+"");
-        description.setText(movieTest.getDescription());
-        progressBar.setProgress(movieTest.getPuntuation());
+
+
+        if (currentState == State.film) { executeMovie(); }
+        if (currentState == State.serie) { executeSerie(); }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void executeMovie() {
+        Picasso.get().load(Common.MOVIEDB_SMALL_POSTER_URL + movie.getPoster_path()).into(imageView);
+        title.setText(movie.getTitle());
+        puntuationText.setText(movie.getVote_average()+"");
+        description.setText(movie.getOverview());
+        progressBar.setProgress((int) movie.getVote_average() * 10);
+
+        MainActivity.apiClient.setfilmActors(requireView(), movie.getId());
+        MainActivity.apiClient.setGenreFilm(movie.getGenre_id());
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void executeSerie() {
+        Picasso.get().load(Common.MOVIEDB_SMALL_POSTER_URL + serie.getPosterPath()).into(imageView);
+        title.setText(serie.getName());
+        puntuationText.setText(serie.getVote_average()+"");
+        description.setText(serie.getOverview());
+        progressBar.setProgress((int) serie.getVote_average() * 10);
+
+        MainActivity.apiClient.setTvActors(requireView(), serie.getId());
+        MainActivity.apiClient.setGenreTV(serie.getGenre_ids());
     }
 }
