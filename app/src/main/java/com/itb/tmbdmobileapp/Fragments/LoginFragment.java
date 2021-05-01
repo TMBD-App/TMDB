@@ -15,6 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.itb.tmbdmobileapp.R;
 
+import java.util.Objects;
+
 public class LoginFragment extends Fragment implements View.OnClickListener  {
     private TextInputLayout layoutPassword, layoutUsername;
     private TextInputEditText editTextPassword, editTextUsername;
@@ -38,7 +40,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
         layoutPassword = view.findViewById(R.id.login_textInputLayout_password);
         layoutUsername = view.findViewById(R.id.login_textInputLayout_username);
         editTextPassword = view.findViewById(R.id.login_textInputEditText_password);
-        editTextUsername = view.findViewById(R.id.login_textInputEditText_username);
+        editTextUsername = view.findViewById(R.id.search_textInputEditText);
 
         register.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -47,7 +49,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        ResetearInputLayout();
+        resetearInputLayout();
         boolean flag = true;
         NavDirections navDirections = null;
         switch (v.getId()) {
@@ -59,25 +61,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
                 navDirections = LoginFragmentDirections.loginToRegister();
                 break;
         }
-        if (flag) Navigation.findNavController(v).navigate(navDirections);
+        if (flag) Navigation.findNavController(v).navigate(Objects.requireNonNull(navDirections));
     }
 
     public boolean canGoToWellcome() {
-        boolean passwordCheck = !editTextPassword.getText().toString().equals("");
-        boolean usernameCheck = !editTextUsername.getText().toString().equals("");
+        boolean passwordCheck = !Objects.requireNonNull(editTextPassword.getText()).toString().equals("");
+        boolean usernameCheck = !Objects.requireNonNull(editTextUsername.getText()).toString().equals("");
 
-        if (!passwordCheck) InputLayoutError(layoutPassword, "Introduce la Contraseña");
-        if (!usernameCheck) InputLayoutError(layoutUsername, "Introduce el Usuario");
+        if (!passwordCheck) inputLayoutError(layoutPassword, "Introduce la Contraseña");
+        if (!usernameCheck) inputLayoutError(layoutUsername, "Introduce el Usuario");
 
         return passwordCheck && usernameCheck;
     }
 
-    private void InputLayoutError(TextInputLayout layout, String mensajeError) {
+    private void inputLayoutError(TextInputLayout layout, String mensajeError) {
         layout.setEnabled(true);
         layout.setError(mensajeError);
     }
 
-    private void ResetearInputLayout() {
+    private void resetearInputLayout() {
         layoutUsername.setError("");
         layoutPassword.setError("");
     }

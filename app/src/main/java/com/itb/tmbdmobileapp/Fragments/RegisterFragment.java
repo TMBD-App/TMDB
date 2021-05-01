@@ -15,6 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.itb.tmbdmobileapp.R;
 
+import java.util.Objects;
+
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     MaterialButton login, register;
@@ -52,7 +54,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         boolean flag = true;
-        ResetearInputLayout();
+        resetearInputLayout();
         if (v.getId() == R.id.register_button_register) flag = canGoToLogin();
 
         if (flag) {
@@ -62,23 +64,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean canGoToLogin() {
-        boolean passwordCheck = !editTextPassword.getText().toString().equals("");
-        boolean usernameCheck = !editTextUsername.getText().toString().equals("");
-        boolean emailCheck = !editTextEmail.getText().toString().equals("");
+        boolean passwordCheck = !Objects.requireNonNull(editTextPassword.getText()).toString().equals("");
+        boolean usernameCheck = !Objects.requireNonNull(editTextUsername.getText()).toString().equals("");
+        boolean emailCheck = !Objects.requireNonNull(editTextEmail.getText()).toString().equals("");
 
-        if (!passwordCheck) InputLayoutError(layoutPassword, "Introduce la Contraseña");
-        if (!usernameCheck) InputLayoutError(layoutUsername, "Introduce el Usuario");
-        if (!emailCheck) InputLayoutError(layoutEmail, "Introduce el email");
+        if (!passwordCheck) inputLayoutError(layoutPassword, "Introduce la Contraseña");
+        if (!usernameCheck) inputLayoutError(layoutUsername, "Introduce el Usuario");
+        if (!emailCheck) inputLayoutError(layoutEmail, "Introduce el email");
 
         return passwordCheck && usernameCheck && emailCheck;
     }
 
-    private void InputLayoutError(TextInputLayout layout, String mensajeError) {
+    private void inputLayoutError(TextInputLayout layout, String mensajeError) {
         layout.setEnabled(true);
         layout.setError(mensajeError);
     }
 
-    private void ResetearInputLayout() {
+    private void resetearInputLayout() {
         layoutUsername.setError("");
         layoutPassword.setError("");
         layoutEmail.setError("");

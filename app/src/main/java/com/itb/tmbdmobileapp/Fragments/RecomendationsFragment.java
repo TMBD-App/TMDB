@@ -15,21 +15,18 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.itb.tmbdmobileapp.Adapters.ActorTestAdapter;
-import com.itb.tmbdmobileapp.Adapters.MovieTestAdapter;
-import com.itb.tmbdmobileapp.Modelos.ActorTest;
-import com.itb.tmbdmobileapp.Modelos.ModelGenerator;
-import com.itb.tmbdmobileapp.Modelos.MovieTest;
+import com.itb.tmbdmobileapp.Activities.MainActivity;
+import com.itb.tmbdmobileapp.Modelos.Movie;
+import com.itb.tmbdmobileapp.Modelos.People;
+import com.itb.tmbdmobileapp.Modelos.TV;
 import com.itb.tmbdmobileapp.R;
-import com.itb.tmbdmobileapp.SupportFragmentManagement.AppFragmentPossibilities;
-import java.util.List;
+import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
 
 public class RecomendationsFragment extends Fragment {
     public enum State {recomendations, films, series, actors, favourites}
     public State currentState;
     private TextView textView1, textView2, textView3;
-    private RecyclerView recyclerView1, recyclerView2, recyclerView3;
-
+    public static RecyclerView recyclerView1, recyclerView2, recyclerView3;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +34,6 @@ public class RecomendationsFragment extends Fragment {
         WellcomeFragment.fragment = this;
         WellcomeFragment.currentFragment = AppFragmentPossibilities.RecomendationsFragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,59 +66,19 @@ public class RecomendationsFragment extends Fragment {
 
         switch (currentState) {
             case recomendations:
+                MainActivity.apiClient.allTypes(requireView());
             case favourites:
-                setAllTypesAdapter();
                 break;
             case films:
+                MainActivity.apiClient.onlyFilms(requireView());
+                break;
             case series:
-                setOnlyFilmsAdapter();
+                MainActivity.apiClient.onlyTv(requireView());
                 break;
             case actors:
-                setOnlyActorAdapter();
+                MainActivity.apiClient.onlyPeople(requireView());
                 break;
         }
-    }
-
-    private void setAllTypesAdapter() {
-        List<MovieTest> movies = ModelGenerator.films();
-        List<MovieTest> series = ModelGenerator.films();
-        List<ActorTest> actors = ModelGenerator.actors();
-
-        MovieTestAdapter movieTestAdapter = new MovieTestAdapter(movies, this::goToFilmsDetail);
-        MovieTestAdapter seriesTestAdapter = new MovieTestAdapter(series, this::goToFilmsDetail);
-        ActorTestAdapter actorTestAdapter = new ActorTestAdapter(actors, this::goToActorDetail);
-
-        recyclerView1.setAdapter(movieTestAdapter);
-        recyclerView2.setAdapter(seriesTestAdapter);
-        recyclerView3.setAdapter(actorTestAdapter);
-    }
-
-    private void setOnlyFilmsAdapter() {
-        List<MovieTest> mostPopular = ModelGenerator.films();
-        List<MovieTest> best = ModelGenerator.films();
-        List<MovieTest> newFilms = ModelGenerator.films();
-
-        MovieTestAdapter mostPopularTestAdapter = new MovieTestAdapter(mostPopular, this::goToFilmsDetail);
-        MovieTestAdapter bestTestAdapter = new MovieTestAdapter(best, this::goToFilmsDetail);
-        MovieTestAdapter newTestAdapter = new MovieTestAdapter(newFilms, this::goToFilmsDetail);
-
-        recyclerView1.setAdapter(mostPopularTestAdapter);
-        recyclerView2.setAdapter(bestTestAdapter);
-        recyclerView3.setAdapter(newTestAdapter);
-    }
-
-    private void setOnlyActorAdapter() {
-        List<ActorTest> mostPopular = ModelGenerator.actors();
-        List<ActorTest> best = ModelGenerator.actors();
-        List<ActorTest> newFilms = ModelGenerator.actors();
-
-        ActorTestAdapter mostPopularTestAdapter = new ActorTestAdapter(mostPopular, this::goToActorDetail);
-        ActorTestAdapter bestTestAdapter = new ActorTestAdapter(best, this::goToActorDetail);
-        ActorTestAdapter newTestAdapter = new ActorTestAdapter(newFilms, this::goToActorDetail);
-
-        recyclerView1.setAdapter(mostPopularTestAdapter);
-        recyclerView2.setAdapter(bestTestAdapter);
-        recyclerView3.setAdapter(newTestAdapter);
     }
 
     private void setTextViews() {
@@ -159,15 +115,4 @@ public class RecomendationsFragment extends Fragment {
         textView2.setText(text2);
         textView3.setText(text3);
     }
-
-    private void goToFilmsDetail(MovieTest movie) {
-        NavDirections navDirections = RecomendationsFragmentDirections.recomendationsToFilmAndSeriesDetails(movie);
-        Navigation.findNavController(getView()).navigate(navDirections);
-    }
-
-    private void goToActorDetail(ActorTest actor) {
-        NavDirections navDirections = RecomendationsFragmentDirections.recomendationsToActorDetails(actor);
-        Navigation.findNavController(getView()).navigate(navDirections);
-    }
-
 }

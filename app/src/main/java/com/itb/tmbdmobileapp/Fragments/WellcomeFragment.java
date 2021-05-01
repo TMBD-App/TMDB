@@ -4,9 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -17,7 +14,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
-import com.itb.tmbdmobileapp.SupportFragmentManagement.AppFragmentPossibilities;
+import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
 import com.itb.tmbdmobileapp.R;
 import com.itb.tmbdmobileapp.SupportFragmentManagement.FragmentChanger;
 
@@ -33,11 +30,12 @@ public class WellcomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.fragment_tmbd_content, container, false);
     }
 
@@ -57,7 +55,7 @@ public class WellcomeFragment extends Fragment {
         navigationView.setNavigationItemSelectedListener(item -> {
             if (currentFragment != AppFragmentPossibilities.RecomendationsFragment) {
                 NavDirections navDirections = FragmentChanger.anyFragmentToRecomendations(currentFragment);
-                Navigation.findNavController(fragment.getView()).navigate(navDirections);
+                Navigation.findNavController(fragment.requireView()).navigate(navDirections);
             }
             if (currentFragment == AppFragmentPossibilities.RecomendationsFragment) {
                 recomendationsFragment = (RecomendationsFragment) fragment;
@@ -80,22 +78,15 @@ public class WellcomeFragment extends Fragment {
             }
             return false;
         });
-    }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.search) {
-            if (currentFragment != AppFragmentPossibilities.SearchFragment) {
-                NavDirections navDirections = FragmentChanger.anyFragmentToSearch(currentFragment);
-                Navigation.findNavController(fragment.getView()).navigate(navDirections); }
-        }
-        return super.onOptionsItemSelected(item);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.search) {
+                if (currentFragment != AppFragmentPossibilities.SearchFragment) {
+                    NavDirections navDirections = FragmentChanger.anyFragmentToSearch(currentFragment);
+                    Navigation.findNavController(fragment.requireView()).navigate(navDirections); }
+            }
+            return false;
+        });
     }
 
     public void changeDrawerVisibility() {

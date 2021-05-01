@@ -12,14 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:src="@drawable/logosinfondo"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/register_textView_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textColor="@color/textColor"
         android:textStyle="bold"
 
@@ -45,7 +46,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_textInputEditText_username"
+            android:id="@+id/search_textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -98,7 +99,7 @@
         android:text="@string/remember_me"
         android:buttonTint="@color/detailsColor"
         android:textColor="@color/textColor"
-        />
+        tools:ignore="RtlHardcoded,UnusedAttribute" />
 
 
     <Button
@@ -143,7 +144,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/facebook"
         android:textColor="@color/textColor"
-        app:icon = "@drawable/facebook"/>
+        app:icon = "@drawable/facebook"
+        tools:ignore="UnusedAttribute" />
 
     <Button
         android:id="@+id/register_button_google"
@@ -156,7 +158,8 @@
         android:layout_marginRight="32dp"
         android:backgroundTint="@color/gmail"
         android:textColor="@color/textColor"
-        app:icon = "@drawable/gmail"/>
+        app:icon = "@drawable/gmail"
+        tools:ignore="UnusedAttribute" />
 
 
 </RelativeLayout>

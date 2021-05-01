@@ -1,6 +1,7 @@
 package com.itb.tmbdmobileapp.Adapters;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,34 +10,37 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.itb.tmbdmobileapp.Modelos.MovieTest;
+import com.itb.tmbdmobileapp.Modelos.Movie;
 import com.itb.tmbdmobileapp.R;
-
+import com.itb.tmbdmobileapp.Support.Common;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
-public class MovieTestAdapter extends RecyclerView.Adapter<MovieTestAdapter.MovieTestHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
     private final OnItemClickListener itemClickListener;
-    private final List<MovieTest> movies;
+    private final List<Movie> movies;
+    private final int layout;
 
     public interface  OnItemClickListener {
-        void onItemClick(MovieTest movieTest);
+        void onItemClick(Movie movieTest);
     }
 
-    public MovieTestAdapter(List<MovieTest> movies, OnItemClickListener onItemClickListener) {
+    public MovieAdapter(List<Movie> movies, int layout, OnItemClickListener onItemClickListener) {
         this.itemClickListener = onItemClickListener;
         this.movies = movies;
+        this.layout = layout;
     }
 
     @NonNull
     @Override
-    public MovieTestHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
-        return new MovieTestHolder(v);
+    public MovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        return new MovieHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieTestHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         holder.bind(movies.get(position), itemClickListener);
     }
 
@@ -45,12 +49,12 @@ public class MovieTestAdapter extends RecyclerView.Adapter<MovieTestAdapter.Movi
         return movies.size();
     }
 
-    public static class MovieTestHolder extends RecyclerView.ViewHolder {
+    public static class MovieHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView puntuationText, title;
         ProgressBar progressBar;
 
-        public MovieTestHolder(@NonNull View itemView) {
+        public MovieHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.photo);
             puntuationText = itemView.findViewById(R.id.progress_bar_num);
@@ -59,11 +63,13 @@ public class MovieTestAdapter extends RecyclerView.Adapter<MovieTestAdapter.Movi
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(MovieTest movie, final OnItemClickListener listener) {
-            image.setImageResource(movie.getPhoto());
-            puntuationText.setText(movie.getPuntuation()+"");
+        public void bind(Movie movie, final OnItemClickListener listener) {
+
+            Picasso.get().load(Common.MOVIEDB_SMALL_POSTER_URL + movie.getPoster_path()).into(image);
+
+            puntuationText.setText(movie.getVote_average()+"");
             title.setText(movie.getTitle());
-            progressBar.setProgress(movie.getPuntuation());
+            progressBar.setProgress((int) movie.getVote_average() * 10);
 
             itemView.setOnClickListener(v -> listener.onItemClick(movie));
         }
