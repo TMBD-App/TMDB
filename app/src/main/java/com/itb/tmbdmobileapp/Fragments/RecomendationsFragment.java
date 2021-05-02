@@ -15,24 +15,33 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.itb.tmbdmobileapp.Activities.MainActivity;
+import com.itb.tmbdmobileapp.Database.DatabaseHelper;
 import com.itb.tmbdmobileapp.Modelos.Movie;
 import com.itb.tmbdmobileapp.Modelos.People;
 import com.itb.tmbdmobileapp.Modelos.TV;
 import com.itb.tmbdmobileapp.R;
 import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecomendationsFragment extends Fragment {
     public enum State {recomendations, films, series, actors, favourites}
     public State currentState;
     private TextView textView1, textView2, textView3;
     public static RecyclerView recyclerView1, recyclerView2, recyclerView3;
+    public static List<Integer> pelisFav, seriesFav, actoresFav;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WellcomeFragment.fragment = this;
         WellcomeFragment.currentFragment = AppFragmentPossibilities.RecomendationsFragment;
+
+        DatabaseHelper.getList(FirebaseAuth.getInstance().getUid());
     }
 
     @Override
@@ -45,6 +54,8 @@ public class RecomendationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         textView1 = view.findViewById(R.id.textView_1);
         textView2 = view.findViewById(R.id.textView_2);
@@ -59,6 +70,7 @@ public class RecomendationsFragment extends Fragment {
 
         currentState = State.recomendations;
         changeRecyclerViews();
+
     }
 
     public void changeRecyclerViews() {
@@ -67,8 +79,9 @@ public class RecomendationsFragment extends Fragment {
         switch (currentState) {
             case recomendations:
                 MainActivity.apiClient.allTypes(requireView());
+                break;
             case favourites:
-                //MainActivity.apiClient.setFavorites(requireView(), listaMovies, listaSeries, listaPeople);
+                MainActivity.apiClient.setFavorites(requireView(), pelisFav, seriesFav, actoresFav);
                 break;
             case films:
                 MainActivity.apiClient.onlyFilms(requireView());

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -16,7 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.itb.tmbdmobileapp.Activities.MainActivity;
+import com.itb.tmbdmobileapp.Database.DatabaseHelper;
 import com.itb.tmbdmobileapp.Modelos.People;
 import com.itb.tmbdmobileapp.R;
 import com.itb.tmbdmobileapp.Support.AppFragmentPossibilities;
@@ -27,6 +32,8 @@ public class ActorDetailsFragment extends Fragment {
     private ImageView image;
     private TextView name, departemnt;
     public static RecyclerView recyclerViewFilms, recyclerViewSeries;
+    private FloatingActionButton addButton;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class ActorDetailsFragment extends Fragment {
 
         People people = (People) requireArguments().get("actor");
 
+        addButton = view.findViewById(R.id.add_button);
+
         image = view.findViewById(R.id.photoSpecific);
         name = view.findViewById(R.id.titleSpecific);
         departemnt = view.findViewById(R.id.textViewDepartment);
@@ -64,5 +73,14 @@ public class ActorDetailsFragment extends Fragment {
 
         MainActivity.apiClient.setActorFilms(requireView(), people.getId());
         MainActivity.apiClient.setActorSeries(requireView(), people.getId());
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseHelper.updateActores(people, FirebaseAuth.getInstance().getUid());
+                Toast.makeText(getContext(), "ACTOR ADDED CORRECTLY", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }

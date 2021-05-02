@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.itb.tmbdmobileapp.Database.DatabaseHelper;
 import com.itb.tmbdmobileapp.Modelos.Movie;
+import com.itb.tmbdmobileapp.Modelos.People;
 import com.itb.tmbdmobileapp.Modelos.User;
 import com.itb.tmbdmobileapp.R;
 
@@ -113,8 +114,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         public void onSuccess(AuthResult authResult) {
 
                             User u = new User(firebaseAuth.getCurrentUser().getUid(), editTextUsername.getText().toString(),firebaseAuth.getCurrentUser().getEmail());
-//                            u.insertarMovie(new Movie());
-//                            u.insertarActor(new People(R.drawable.actor1, 10, 20, "a", "a"));
                             DatabaseHelper.insert(u);
                             Toast.makeText(getContext(), "User created successfully", Toast.LENGTH_SHORT).show();
 

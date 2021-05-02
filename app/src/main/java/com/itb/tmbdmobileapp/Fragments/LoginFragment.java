@@ -30,7 +30,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener  {
     private TextInputEditText editTextPassword, editTextEmail;
     private FirebaseAuth firebaseAuth;
     private boolean loginSuccess = false;
-    User u;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

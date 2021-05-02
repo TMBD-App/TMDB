@@ -6,16 +6,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.itb.tmbdmobileapp.Activities.MainActivity;
+import com.itb.tmbdmobileapp.Database.DatabaseHelper;
 import com.itb.tmbdmobileapp.Modelos.Movie;
 import com.itb.tmbdmobileapp.Modelos.TV;
 import com.itb.tmbdmobileapp.R;
@@ -33,6 +40,7 @@ public class FilmAndSeriesDetailsFragment extends Fragment {
     private ImageView imageView;
     private TextView title, puntuationText, description;
     private ProgressBar progressBar;
+    private FloatingActionButton addButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,7 @@ public class FilmAndSeriesDetailsFragment extends Fragment {
             currentState = State.serie;
         }
 
+        addButton = view.findViewById(R.id.add_button);
         imageView = view.findViewById(R.id.photoSpecific);
         title = view.findViewById(R.id.titleSpecific);
         puntuationText = view.findViewById(R.id.progress_bar_num);
@@ -74,6 +83,20 @@ public class FilmAndSeriesDetailsFragment extends Fragment {
 
         if (currentState == State.film) { executeMovie(); }
         if (currentState == State.serie) { executeSerie(); }
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentState == State.film){
+                    DatabaseHelper.updatePelis(movie, FirebaseAuth.getInstance().getUid());
+                    Toast.makeText(getContext(), "FILM ADDED CORRECTLY", Toast.LENGTH_SHORT).show();
+                }
+                if (currentState == State.serie){
+                    DatabaseHelper.updateSeries(serie, FirebaseAuth.getInstance().getUid());
+                    Toast.makeText(getContext(), "SERIE ADDED CORRECTLY", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")

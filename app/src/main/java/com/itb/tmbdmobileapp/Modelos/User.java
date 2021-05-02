@@ -1,5 +1,7 @@
 package com.itb.tmbdmobileapp.Modelos;
 
+import com.itb.tmbdmobileapp.Fragments.MovieIds;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +11,7 @@ public class User {
     private String username;
     private String email;
 
-    private List<Movie> pelis = new ArrayList<>();
-    private List<People> actores = new ArrayList<>();
-    private List<TV> series = new ArrayList<>();
+
 
     public User(String id, String username, String email) {
         this.id = id;
@@ -47,39 +47,5 @@ public class User {
         this.email = email;
     }
 
-    public List<Movie> getPelis() {
-        return pelis;
-    }
 
-    public void setPelis(List<Movie> pelis) {
-        this.pelis = pelis;
-    }
-
-    public List<People> getActores() {
-        return actores;
-    }
-
-    public void setActores(List<People> actores) {
-        this.actores = actores;
-    }
-
-    public List<TV> getSeries() {
-        return series;
-    }
-
-    public void setSeries(List<TV> series) {
-        this.series = series;
-    }
-
-    public void insertarMovie (Movie m){
-        pelis.add(m);
-    }
-
-    public void insertarActor (People p){
-        actores.add(p);
-    }
-
-    public void insertarSerie (TV s){
-        series.add(s);
-    }
 }

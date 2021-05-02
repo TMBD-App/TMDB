@@ -332,7 +332,7 @@ public class ApiClient {
             }
         }
     }
-    
+
     public void setfilmActors(View v, int movieId) { executeCast(Common.getUrlCastMovies(movieId), v); }
     public void setGenreFilm(List<Integer> genres) { executeGenre(Common.GET_GENRE_MOVIE, genres); }
 
@@ -349,16 +349,31 @@ public class ApiClient {
     public void setSearch(View v, String search) { executeMovies(Common.getUrlSearch(search), 3, v);}
 
     public void setFavorites(View v, List<Integer> moviIds, List<Integer> serieIds, List<Integer> peopleIds) {
-        for (int i = 0; i < moviIds.size(); i++) {
-            executeOnlyOneMovie(Common.getUrlFilmById(moviIds.get(i)), i != moviIds.size() -1, v);
+        if (moviIds.size() == 0) {
+            MovieAdapter adapter = new MovieAdapter(auxMovie, R.layout.item_view_grid, movie -> FragmentChanger.recomendatiosToFilmsDetail(movie, v));
+            RecomendationsFragment.recyclerView1.setAdapter(adapter);
+        }else {
+            for (int i = 0; i < moviIds.size(); i++) {
+                executeOnlyOneMovie(Common.getUrlFilmById(moviIds.get(i)), i != moviIds.size() -1, v);
+            }
         }
 
-        for (int i = 0; i < serieIds.size(); i++) {
-            executeOnlyOneTv(Common.getUrlTvById(serieIds.get(i)), i != serieIds.size() -1, v);
+        if (serieIds.size() == 0) {
+            TvAdapter adapter = new TvAdapter(auxTV, R.layout.item_view_grid, tv -> FragmentChanger.recomendationsToTvDetails(tv, v));
+            RecomendationsFragment.recyclerView2.setAdapter(adapter);
+        }else {
+            for (int i = 0; i < serieIds.size(); i++) {
+                executeOnlyOneTv(Common.getUrlTvById(serieIds.get(i)), i != serieIds.size() - 1, v);
+            }
         }
 
-        for (int i = 0; i < peopleIds.size(); i++) {
-            executeOnlyOnePeople(Common.getUrlPeopleById(peopleIds.get(i)), i != peopleIds.size() -1, v);
+        if (peopleIds.size() == 0) {
+            ActorAdapter adapter = new ActorAdapter(auxPeople, R.layout.item_view_grid_people, people -> FragmentChanger.recomendationsToActorDetail(people, v));
+            RecomendationsFragment.recyclerView3.setAdapter(adapter);
+        }else {
+            for (int i = 0; i < peopleIds.size(); i++) {
+                executeOnlyOnePeople(Common.getUrlPeopleById(peopleIds.get(i)), i != peopleIds.size() - 1, v);
+            }
         }
     }
 }
